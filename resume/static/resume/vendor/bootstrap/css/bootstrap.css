@@ -6288,9 +6288,9 @@ button.bg-dark:focus {
   display: inline-block !important;
 }
 
-.d-block {
+/*.d-block {
   display: block !important;
-}
+}*/
 
 .d-table {
   display: table !important;

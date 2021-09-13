@@ -78,14 +78,48 @@ body {
     /*padding-left: 17rem;*/
     padding-left: 13%;
 }
-#sideNav {
-    /*width: 17rem;*/
-    width: 15rem;
-    width: 13%;
+
+/* hamburger:  reactive on small screens*/
+.navbar-toggler {
+  margin: auto;
 }
-#sideNav .navbar-brand .img-profile {
-    max-width: 90%;
-    }
+
+@media (min-width: 767.98px) {
+  #sideNav {
+      /*width: 17rem;*/
+      width: 15rem;
+      width: 13%;
+  }
+  #sideNav .navbar-brand .img-profile {
+      max-width: 90%;
+  }
+}
+@media (max-width: 767.98px) {
+  /* expanded area: fixed width and smaller font */
+  #sideNav {
+    width: 90px;
+    font-size: 70%;
+  }
+  /* picture goes off*/
+  #sideNav .navbar-brand {
+   display: none;
+  }
+  .navbar {
+    padding: 0.5rem 1rem;
+  }
+}
+@media (max-width: 991.98px) {
+ #sideNav {
+    padding-left: auto;
+    padding-right: auto;
+  }
+  #sideNav .navbar-brand {
+   display: none;
+  }
+  #sideNav {
+    width: 115px;
+  }
+}
 /*  override dates and locations on the right*/
 section.resume-section .resume-item .resume-date{min-width:15rem}
 

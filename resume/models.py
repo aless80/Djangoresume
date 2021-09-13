@@ -209,7 +209,7 @@ class Language(models.Model):
     addendum = models.CharField(max_length=20, blank=True)
     class Meta:
         verbose_name_plural = "10. Languages"
-        ordering = ['level','order']
+        ordering = ['order','level']
     def __unicode__(self):
         return ' - '.join([self.language, str(self.level)])
     def __str__(self):
