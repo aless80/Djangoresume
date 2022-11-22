@@ -1,7 +1,7 @@
 Django==2.2.27
 django-appconf==1.0.2
 django-compressor==2.2
-Pillow==9.0.1
+Pillow==9.3.0
 python-dotenv==0.8.2
 pytz==2018.3
 rcssmin==1.0.6
