@@ -1,4 +1,5 @@
 ## Djangoresume
+
 Resume site based on Django. See it live at [aless80.pythonanywhere.com/resume](https://aless80.pythonanywhere.com/resume)
 This Django project uses sqlite because it is free on pythonanywhere.com. See my other project [Django-resume-PostgreSQL](https://github.com/aless80/Django-resume-PostgreSQL) 
 
@@ -15,17 +16,16 @@ This Django project uses sqlite because it is free on pythonanywhere.com. See my
 -------------
 
 ## Installation
-This repository uses a sqlite database. The data for my CV has been dumped to resume/fictures/data.json. 
-I suggest setting up a virtual environment for python 3, installing sqlite, create a database user, and set up a couple of secret keys and passwords.
+This repository uses a sqlite database. The data for my CV has been dumped to `resume/fixtures/data.json`. 
+I suggest setting up a virtual environment for python 3, installing sqlite, create a database user, and set up secret keys and passwords.
 
 #### Virtual environment
 <pre>
-python3 -m pip3 install --user virtualenv 
-cd ~/virtualenv 
-virtualenv django_resume
-source django_resume/bin/activate
-(django_resume)$ pip install -r requirements.txt 
-(django_resume)$ python setup.py install  
+python3 -V     # Python 3.10.12
+python3 -m venv venv
+source venv/bin/activate
+(venv)$ pip install -r requirements.txt 
+<!-- (venv)$ python setup.py install   -->
 </pre>
 
 #### Security Settings
@@ -42,6 +42,10 @@ python3 manage.py loaddata resume/fixtures/data.json
 To start fresh: 
 ```
 python3 manage.py flush 		#clear all data
+```
+
+To start the application locally:
+```
 python3 manage.py createsuperuser 	#create a superuser
 python3 manage.py runserver 		#launch the server
 !firefox http://127.0.0.1:8000/admin 	#launch your browser on localhost

@@ -31,7 +31,7 @@ class PersonalInfo(models.Model):
         return " ".join([self.first_name, self.middle_name, self.last_name])
     def githubname(self):
         print('git='+str(self.github))
-        if self.github is not '':
+        if self.github != '':
             return self.github.rsplit('/',maxsplit=1)[1]
         else:
             return None
