@@ -16,7 +16,7 @@ import sys
 RUNNING_DEVSERVER = (len(sys.argv) > 1 and sys.argv[1] == 'runserver')
 print("RUNNING_DEVSERVER: "+str(RUNNING_DEVSERVER))
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 #Deploy settings
 #SECURE_CONTENT_TYPE_NOSNIFF = True     #Not needed because Django isn’t involved in serving user-uploaded files
 #SECURE_BROWSER_XSS_FILTER = True    #Protection
@@ -52,7 +52,6 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    #'compressor',
     'resume'
 ]
 
@@ -146,7 +145,6 @@ STATIC_ROOT = os.path.join(BASE_DIR, "assets")
 MEDIA_URL = "/media/"
 # Absolute filesystem path to the directory that will hold user-uploaded files.
 # Example: "/home/amarin/Mezzanine/media/"
-#MEDIA_ROOT = os.path.join(BASE_DIR, *MEDIA_URL.strip("/").split("/"))
 MEDIA_ROOT = os.path.join(BASE_DIR, "assets/media/")
 
 

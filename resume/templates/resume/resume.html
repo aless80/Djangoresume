@@ -66,7 +66,7 @@
       <ul class="list-inline list-social-icons mb-0">
         {% if pinfo.email %}
         <li class="list-inline-item">
-          <a href="{{pinfo.email}}" target="_blank" title="Send me an email">
+          <a href="mailto:{{pinfo.email}}" target="_blank" title="Send me an email">
             <span class="fa-stack fa-lg">
               <i class="fa fa-circle fa-stack-2x"></i>
               <i class="fa fa-envelope fa-stack-1x fa-inverse"></i>
@@ -120,6 +120,17 @@
             <span class="fa-stack fa-lg">
               <i class="fa fa-circle fa-stack-2x"></i>
               <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+            </span>
+          </a>
+        </li>
+        {% endif %}
+
+        {% if pinfo.cv_pdf %}
+        <li class="list-inline-item">
+          <a href="{{ pinfo.cv_pdf.url }}" target="_blank" title="Download CV in PDF">
+            <span class="fa-stack fa-lg">
+              <i class="fa fa-circle fa-stack-2x"></i>
+              <i class="fa fa-file-pdf-o fa-stack-1x fa-inverse"></i>
             </span>
           </a>
         </li>
@@ -183,7 +194,7 @@
             <a href="{{ edu.schoolurl2 }}" target="_blank">{{ edu.name2|safe }}</a>
             {% endif %} 
           </p>
-          <p>{{ edu.description }}</p>
+          <p>{{ edu.description|safe }}</p>
         </div>
         <div class="resume-date text-md-right mb-0">
           <div class="subheading mb-3 text-primary">{{ edu.formatted_start_date }} - {{ edu.formatted_end_date }}</div>
@@ -244,6 +255,9 @@
         <li>
           <p>
           <strong>{{ lan.language }}</strong>: {{ lan.get_level_display }}
+            {% if lan.addendum  %}
+              {{ lan.addendum }}
+            {% endif %}
           </p>
         </li>
         {% endfor %}
@@ -282,7 +296,7 @@
           {% if proj.image %}
           <div class="col-sm-4 col-md-3">
             <div id="{{ proj.name }}" class="thumb" alt="{{ proj.name }}" title="{{ proj.long_description }}"
-                 onclick="openModal(this,event);" style="background-image: url({{ proj.image }});">
+                 onclick="openModal(this,event);" style="background-image: url({{ proj.image.url }});">
 
               <span class="fa-stack fa-lg launcher" s>
                 <i class="fa fa-circle fa-stack-2x"></i>
@@ -337,13 +351,9 @@
           <li >
             <i class="fa-li fa fa-check" style="display:block;"></i>
             {{ pub.formatted_authors|safe }} {{ pub.title }}
-              <span class="italic">{{ pub.journal }}</span>, {{ pub.year }}
-              {% if pub.journalpages %}
-                  {{ pub.year }}, {{ pub.journalpages }}.
-              {% else %}
-                  {{ pub.year }}.
-              {% endif %}
-            <a   target="_blank" href="{{ pub.link }}">Link</a>
+              <span class="italic">{{ pub.journal }}</span>, {{ pub.year }},
+            {{ pub.journalpages }}.
+            <a target="_blank" href="{{ pub.link }}">Link</a>
           </li>
         </ul>
         {% endfor %}

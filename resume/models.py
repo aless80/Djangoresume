@@ -10,6 +10,7 @@ def showall(klass):
             print(field.name, value)
             
 class PersonalInfo(models.Model):
+    id = models.AutoField(primary_key=True)
     first_name = models.CharField(max_length=255)
     middle_name = models.CharField(max_length=255, blank=True)
     last_name = models.CharField(max_length=255)
@@ -24,13 +25,14 @@ class PersonalInfo(models.Model):
     site = models.URLField(blank=True)
     twittername = models.CharField(max_length=100, blank=True)
     image = models.ImageField(upload_to='static/resume/img/',blank=True)
+    cv_pdf = models.FileField(upload_to='static/resume/img/', blank=True, help_text='Downloadable resume file')
     class Meta:
         verbose_name_plural = "01. Personal Info"    
     def full_name(self):
         return " ".join([self.first_name, self.middle_name, self.last_name])    
     def githubname(self):
         print('git='+str(self.github))
-        if self.github is not '':
+        if self.github != '':
             return self.github.rsplit('/',maxsplit=1)[1]
         else:
             return None
@@ -40,6 +42,7 @@ class PersonalInfo(models.Model):
         return self.full_name()
 
 class Overview(models.Model):
+    id = models.AutoField(primary_key=True)
     text = models.TextField()
     class Meta:
         verbose_name_plural = "02. Overview"
@@ -49,6 +52,7 @@ class Overview(models.Model):
         return self.text[0:40] + '...'
 
 class Education(models.Model):
+    id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=250)
     name2 = models.CharField(max_length=250, blank=True)
     location = models.CharField(max_length=250)
@@ -86,6 +90,7 @@ class Education(models.Model):
         return self.name
 
 class Job(models.Model):
+    id = models.AutoField(primary_key=True)
     company = models.CharField(max_length=250)
     companyurl = models.URLField('Company URL')
     location = models.CharField(max_length=250)
@@ -128,6 +133,7 @@ class Job(models.Model):
         return self.company
 
 class JobAccomplishment(models.Model):
+    id = models.AutoField(primary_key=True)
     description = models.TextField()
     job = models.ForeignKey('Job',on_delete=models.CASCADE)
     order = models.IntegerField(default=1)
@@ -141,6 +147,7 @@ class JobAccomplishment(models.Model):
         return self.description[0:10]+'...'
 
 class Skillset(models.Model):
+    id = models.AutoField(primary_key=True)
     name = models.TextField()
     class Meta:
         verbose_name_plural = "06. Skillsets"
@@ -151,6 +158,7 @@ class Skillset(models.Model):
         return self.name
 
 class Skill(models.Model):
+    id = models.AutoField(primary_key=True)
     text =  models.TextField()
     order = models.IntegerField(default=1)
     #skillurl = models.URLField('Skill URL', blank=True)
@@ -164,6 +172,7 @@ class Skill(models.Model):
         return self.text
 
 class ProgrammingArea(models.Model):
+    id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=250)
     order = models.IntegerField(default=1)
     class Meta:
@@ -173,6 +182,7 @@ class ProgrammingArea(models.Model):
         return self.name
 
 class ProgrammingLanguage(models.Model):
+    id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=250)
     programmingarea = models.ForeignKey('ProgrammingArea',on_delete=models.CASCADE)
     NIH_proficiency_scale = (
@@ -195,6 +205,7 @@ class ProgrammingLanguage(models.Model):
         return self.name
 
 class Language(models.Model):
+    id = models.AutoField(primary_key=True)
     language = models.CharField(max_length=20,blank=False)
     order = models.IntegerField(default=1)
     ILR_scale = (
@@ -205,26 +216,29 @@ class Language(models.Model):
         (1, 'Elementary professional proficiency')
         )
     level = models.IntegerField(help_text='Choice between 1 and 5', default=5, choices=ILR_scale)
+    addendum = models.CharField(max_length=20, blank=True)
     class Meta:
         verbose_name_plural = "10. Languages"
         ordering = ['level','order']
     def __unicode__(self):
-        return ' - '.join([self.language, self.level])
+        return ' - '.join([self.language, str(self.level)])
     def __str__(self):
         return self.language
 
 class ProjectType(models.Model):
+    id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=255)
     order = models.IntegerField(default=1)
     class Meta:
         verbose_name_plural = "11. ProjectTypes"
         ordering = ['order','id']
     def __unicode__(self):
-        return ' - '.join([self.name, self.id])
+        return ' - '.join([self.name, str(self.id)])
     def __str__(self):
         return self.name
 
 class Project(models.Model):
+    id = models.AutoField(primary_key=True)
     name = models.CharField(max_length=255)
     short_description = models.TextField(blank=True,help_text="Text shown in project list")
     long_description = models.TextField(blank=True,help_text="Text shown in modals appearing when clicking on images")
@@ -242,28 +256,32 @@ class Project(models.Model):
         verbose_name_plural = "12. Projects"
         ordering = ['order','id']
     def __unicode__(self):
-        return ' - '.join([self.name, self.link, self.description[0:50]+'...'])
+        return ' - '.join([self.name, self.link, self.short_description[0:50]+'...'])
     def __str__(self):
         return self.name
 
 class Achievement(models.Model):
+    id = models.AutoField(primary_key=True)
     title = models.CharField(max_length=50, blank=True)
     description = models.TextField()
     order = models.IntegerField(default=1)
     url = models.URLField('URL', blank=True)
+    # file will be uploaded to MEDIA_ROOT/<upload_to>  '/resume/static/resume/'
+    achievement_pdf = models.FileField(upload_to='static/resume/img/', blank=True, help_text='Downloadable file')
     #linkdefault = 'this link'
-    #if url is not '': linkdefault = ''
+    #if url != '': linkdefault = ''
     #linkname = models.CharField(default=linkdefault, max_length=150, blank=True)
     class Meta:
         verbose_name_plural = "13. Achievements"
         db_table = 'achievement'
         ordering = ['order', 'id']
     def __unicode__(self):
-        return ' - '.join([self.order, self.link, self.description[0:50]+'...'])
+        return ' - '.join([str(self.order), self.url, self.description[0:50]+'...'])
     def __str__(self):
         return self.title
 
 class Publication(models.Model):
+    id = models.AutoField(primary_key=True)
     title = models.CharField(max_length=250)
     authors = models.TextField()
     author_underlined = models.CharField(max_length=50, default="Marin A")
@@ -279,6 +297,6 @@ class Publication(models.Model):
     def formatted_authors(self):
         return self.authors.replace(self.author_underlined,'<span class="strong-underlined">'+self.author_underlined+'</span>')
     def __unicode__(self):
-        return ' - '.join([self.id, self.year, self.order, self.journal[0:10]+'...'])
+        return ' - '.join([str(self.id), str(self.year), str(self.order), self.journal[0:10]+'...'])
     def __str__(self):
         return self.title[0:10]+'...'
